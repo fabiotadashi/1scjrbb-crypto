@@ -14,15 +14,13 @@ import java.util.stream.Collectors;
 @RequestMapping("cryptos")
 public class CryptoController {
 
-    private List<CryptoDTO> cryptoDTOList;
+    private ArrayList<CryptoDTO> cryptoDTOList = new ArrayList<>();
 
-    public CryptoController(){
-        cryptoDTOList =  Arrays.asList(
-                new CryptoDTO(1, "BitCoin", "BTC", BigDecimal.valueOf(150_000)),
-                new CryptoDTO(2, "Etherium", "ETH", BigDecimal.valueOf(10_000)),
-                new CryptoDTO(3, "Dodge Coin", "DODGE", BigDecimal.valueOf(3)),
-                new CryptoDTO(4, "Cardano", "ADA", BigDecimal.valueOf(3.5))
-        );
+    public CryptoController() {
+        cryptoDTOList.add(new CryptoDTO(1, "BitCoin", "BTC", BigDecimal.valueOf(150_000)));
+        cryptoDTOList.add(new CryptoDTO(2, "Etherium", "ETH", BigDecimal.valueOf(10_000)));
+        cryptoDTOList.add(new CryptoDTO(3, "Dodge Coin", "DODGE", BigDecimal.valueOf(3)));
+        cryptoDTOList.add(new CryptoDTO(4, "Cardano", "ADA", BigDecimal.valueOf(3.5)));
     }
 
     @GetMapping
@@ -35,11 +33,62 @@ public class CryptoController {
     }
 
     @GetMapping("{id}")
-    public CryptoDTO getById(@PathVariable int id){
-        return cryptoDTOList.stream()
-            .filter(cryptoDTO -> cryptoDTO.getId() == id)
-            .findFirst()
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    public CryptoDTO getById(@PathVariable int id) {
+        return getCryptoByIdDTO(id);
     }
 
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public CryptoDTO insert(
+            @RequestBody CreateUpdateCryptoDTO createUpdateCryptoDTO
+    ) {
+        CryptoDTO cryptoDTO = new CryptoDTO();
+
+        if(createUpdateCryptoDTO.getName() == null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        cryptoDTO.setId(cryptoDTOList.size() + 1);
+        cryptoDTO.setName(createUpdateCryptoDTO.getName());
+        cryptoDTO.setAcronym(createUpdateCryptoDTO.getAcronym());
+        cryptoDTO.setUsdValue(createUpdateCryptoDTO.getUsdValue());
+
+        cryptoDTOList.add(cryptoDTO);
+        return cryptoDTO;
+    }
+
+    @PutMapping("{id}")
+    public CryptoDTO update(
+            @RequestBody CreateUpdateCryptoDTO createUpdateCryptoDTO,
+            @PathVariable int id){
+        CryptoDTO cryptoDTO = getCryptoByIdDTO(id);
+        cryptoDTO.setName(createUpdateCryptoDTO.getName());
+        cryptoDTO.setAcronym(createUpdateCryptoDTO.getAcronym());
+        cryptoDTO.setUsdValue(createUpdateCryptoDTO.getUsdValue());
+        return cryptoDTO;
+    }
+
+    @PatchMapping("{id}")
+    public CryptoDTO updateUsdValue(
+            @PathVariable int id,
+            @RequestBody CryptoUsdValueDTO cryptoUsdValueDTO
+    ){
+        CryptoDTO cryptoDTO = getCryptoByIdDTO(id);
+        cryptoDTO.setUsdValue(cryptoUsdValueDTO.getUsdValue());
+        return cryptoDTO;
+    }
+
+    @DeleteMapping("id")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable int id){
+        CryptoDTO cryptoDTO = getCryptoByIdDTO(id);
+        cryptoDTOList.remove(cryptoDTO);
+    }
+
+    private CryptoDTO getCryptoByIdDTO(int id) {
+        return cryptoDTOList.stream()
+                .filter(cryptoDTO -> cryptoDTO.getId() == id)
+                .findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
 }
