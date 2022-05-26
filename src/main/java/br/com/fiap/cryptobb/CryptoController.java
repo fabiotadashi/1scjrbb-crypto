@@ -1,9 +1,8 @@
 package br.com.fiap.cryptobb;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -33,6 +32,14 @@ public class CryptoController {
         return cryptoDTOList.stream()
                 .filter(cryptoDTO -> name == null || cryptoDTO.getName().contains(name))
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("{id}")
+    public CryptoDTO getById(@PathVariable int id){
+        return cryptoDTOList.stream()
+            .filter(cryptoDTO -> cryptoDTO.getId() == id)
+            .findFirst()
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
 }
