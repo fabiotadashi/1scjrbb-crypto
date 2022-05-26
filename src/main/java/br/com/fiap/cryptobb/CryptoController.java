@@ -6,7 +6,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,6 +13,7 @@ import java.util.stream.Collectors;
 @RequestMapping("cryptos")
 public class CryptoController {
 
+    private int sequence = 4;
     private ArrayList<CryptoDTO> cryptoDTOList = new ArrayList<>();
 
     public CryptoController() {
@@ -48,7 +48,7 @@ public class CryptoController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
-        cryptoDTO.setId(cryptoDTOList.size() + 1);
+        cryptoDTO.setId(++sequence);
         cryptoDTO.setName(createUpdateCryptoDTO.getName());
         cryptoDTO.setAcronym(createUpdateCryptoDTO.getAcronym());
         cryptoDTO.setUsdValue(createUpdateCryptoDTO.getUsdValue());
@@ -78,7 +78,7 @@ public class CryptoController {
         return cryptoDTO;
     }
 
-    @DeleteMapping("id")
+    @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id){
         CryptoDTO cryptoDTO = getCryptoByIdDTO(id);
@@ -89,6 +89,6 @@ public class CryptoController {
         return cryptoDTOList.stream()
                 .filter(cryptoDTO -> cryptoDTO.getId() == id)
                 .findFirst()
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "crypto.not.found"));
     }
 }
