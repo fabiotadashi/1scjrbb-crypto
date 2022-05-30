@@ -3,14 +3,17 @@ package br.com.fiap.cryptobb.service;
 import br.com.fiap.cryptobb.dto.CreateUpdateCryptoDTO;
 import br.com.fiap.cryptobb.dto.CryptoDTO;
 import br.com.fiap.cryptobb.dto.CryptoUsdValueDTO;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class CryptoServiceImpl implements CryptoService {
 
     @Override
     public List<CryptoDTO> listAll(String name) {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
