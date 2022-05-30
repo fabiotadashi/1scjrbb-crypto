@@ -1,4 +1,4 @@
-package br.com.fiap.cryptobb;
+package br.com.fiap.cryptobb.dto;
 
 import java.math.BigDecimal;
 
