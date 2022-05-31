@@ -1,5 +1,7 @@
 package br.com.fiap.cryptobb.dto;
 
+import br.com.fiap.cryptobb.entity.CryptoEntity;
+
 import java.math.BigDecimal;
 
 public class CryptoDTO {
@@ -16,6 +18,13 @@ public class CryptoDTO {
         this.name = name;
         this.acronym = acronym;
         this.usdValue = usdValue;
+    }
+
+    public CryptoDTO(CryptoEntity entity) {
+        this.id = entity.getId();
+        this.name = entity.getName();
+        this.acronym = entity.getAcronym();
+        this.usdValue = entity.getUsdValue();
     }
 
     public int getId() {
