@@ -6,6 +6,12 @@ spring:
     url: jdbc:h2:~/Documents/cryptodatabase;DB_CLOSE_ON_EXIT=FALSE
     username: fiap
     password: fiap
+  jpa:
+    hibernate:
+      ddl-auto: update # Nao deve ser utilizado em prd
+  h2:
+    console:
+      enabled: true
 
 fiap:
   debug: true
