@@ -1,10 +1,16 @@
 package br.com.fiap.cryptobb.entity;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Entity
 @Table(name = "TB_CRYPTOS")
+@EntityListeners(AuditingEntityListener.class)
 public class CryptoEntity {
 
     @Id
@@ -19,6 +25,30 @@ public class CryptoEntity {
 
     @Column
     private BigDecimal usdValue;
+
+    @Column(nullable = false, updatable = false)
+    @CreatedDate
+    private Date createdDate;
+
+    @Column(nullable = false, updatable = true)
+    @LastModifiedDate
+    private Date lastUpdatedDate;
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Date getLastUpdatedDate() {
+        return lastUpdatedDate;
+    }
+
+    public void setLastUpdatedDate(Date lastUpdatedDate) {
+        this.lastUpdatedDate = lastUpdatedDate;
+    }
 
     public int getId() {
         return id;

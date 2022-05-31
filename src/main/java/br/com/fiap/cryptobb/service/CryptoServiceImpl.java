@@ -23,7 +23,14 @@ public class CryptoServiceImpl implements CryptoService {
 
     @Override
     public List<CryptoDTO> listAll(String name) {
-        return cryptoRepository.findAll()
+        List<CryptoEntity> cryptoEntityList;
+        if(name == null){
+            cryptoEntityList = cryptoRepository.findAll();
+        } else {
+            cryptoEntityList = cryptoRepository.findAllByNameContaining(name);
+        }
+
+        return cryptoEntityList
                 .stream()
                 .map(entity -> new CryptoDTO(entity))
                 .collect(Collectors.toList());
