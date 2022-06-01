@@ -8,7 +8,7 @@ spring:
     password: fiap
   jpa:
     hibernate:
-      ddl-auto: update # Nao deve ser utilizado em prd
+      ddl-auto: validate
   h2:
     console:
       enabled: true
