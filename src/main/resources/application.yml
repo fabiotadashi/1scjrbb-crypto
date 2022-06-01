@@ -12,6 +12,10 @@ spring:
   h2:
     console:
       enabled: true
+#  security:
+#    user:
+#      name: user
+#      password: senha
 
 fiap:
   debug: true
