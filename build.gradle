@@ -27,6 +27,8 @@ dependencies {
 
 	// Security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	compileOnly("org.springframework.boot:spring-boot-devtools")

@@ -17,5 +17,9 @@ spring:
 #      name: user
 #      password: senha
 
+jwt:
+  secret: F14P
+  expiration: 3
+
 fiap:
   debug: true
