@@ -14,9 +14,11 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-batch'
+	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.29'
 	runtimeOnly 'com.h2database:h2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.batch:spring-batch-test'
+	testImplementation 'org.awaitility:awaitility:4.0.3'
 }
 
 tasks.named('test') {

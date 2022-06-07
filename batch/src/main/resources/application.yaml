@@ -1,11 +1,13 @@
 spring:
   datasource:
-    url: jdbc:h2:~/cryptodbbatch;DB_CLOSE_ON_EXIT=FALSE
-    username: fiap
-    password: fiap
+#  docker run --name mysql-fiap -v /dev/mysql:/etc/mysql/conf.d -e MYSQL_ROOT_PASSWORD=password -d -p 3306:3306 mysql:8.0
+    url: jdbc:mysql://localhost:3306/cryptodb
+    username: root
+    password: password
+    driver-class-name: com.mysql.jdbc.Driver
   batch:
     jdbc:
-      initialize-schema: always
+      initialize-schema: always # never | embedded
       schema: classpath:schema.sql
 
 file:
