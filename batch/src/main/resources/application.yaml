@@ -6,6 +6,9 @@ spring:
   batch:
     jdbc:
       initialize-schema: always
+      schema: classpath:schema.sql
 
 file:
-  path: /Users/fabiomiyasato/Downloads/cryptobb/batch/file_to_delete.txt
+#  path: /Users/fabiomiyasato/Downloads/cryptobb/batch/file_to_delete.txt
+  chunk: 3
+  resource: crypto_import.csv
